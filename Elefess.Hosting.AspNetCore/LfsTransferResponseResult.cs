@@ -2,8 +2,8 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using Elefess.Core;
-using Elefess.Core.Models;
+using Elefess;
+using Elefess.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Elefess.Hosting.AspNetCore;

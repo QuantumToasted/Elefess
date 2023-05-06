@@ -4,11 +4,11 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Elefess</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Elefess\Elefess.csproj" />
-      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

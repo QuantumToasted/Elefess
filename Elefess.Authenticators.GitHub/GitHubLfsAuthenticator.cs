@@ -1,5 +1,5 @@
-﻿using Elefess.Core;
-using Elefess.Core.Models;
+﻿using Elefess;
+using Elefess.Models;
 using Octokit;
 
 namespace Elefess.Authenticators.GitHub;

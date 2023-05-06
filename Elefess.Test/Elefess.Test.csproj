@@ -28,7 +28,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Elefess.Authenticators.GitHub\Elefess.Authenticators.GitHub.csproj" />
-      <ProjectReference Include="..\Elefess.Core\Elefess.Core.csproj" />
+      <ProjectReference Include="..\Elefess\Elefess.csproj" />
       <ProjectReference Include="..\Elefess.Hosting.AspNetCore\Elefess.Hosting.AspNetCore.csproj" />
       <ProjectReference Include="..\Elefess.TestHost.AspNetCore\Elefess.TestHost.AspNetCore.csproj" />
     </ItemGroup>

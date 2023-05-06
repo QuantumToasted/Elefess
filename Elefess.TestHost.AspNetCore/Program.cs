@@ -1,5 +1,5 @@
 using Elefess;
-using Elefess.Core.Extensions;
+using Elefess.Extensions;
 using Elefess.Hosting.AspNetCore.Extensions;
 using Elefess.TestHost.AspNetCore;
 

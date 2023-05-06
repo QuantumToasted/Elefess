@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
-using Elefess.Core;
-using Elefess.Core.Models;
+using Elefess;
+using Elefess.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-﻿using Elefess.Core;
+﻿using Elefess;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Elefess.Authenticators.GitHub;

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using Elefess.Core.Models;
+using Elefess.Models;
 using Elefess.TestHost.AspNetCore;
 
 namespace Elefess.Test;

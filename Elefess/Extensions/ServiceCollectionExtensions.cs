@@ -38,7 +38,7 @@ public static class ServiceCollectionExtensions
         => services.AddObjectManager<DefaultLfsObjectManager>();
     
     /// <summary>
-    /// Adds <see cref="BasicLfsTransferRequestSelector"/> and <see cref="DefaultLfsObjectManager"/> instances with a service collection.
+    /// Registers <see cref="BasicLfsTransferRequestSelector"/> and <see cref="DefaultLfsObjectManager"/> instances with a service collection.
     /// </summary>
     /// <param name="services">The service collection to register the <see cref="BasicLfsTransferRequestSelector"/> and <see cref="DefaultLfsObjectManager"/> with.</param>
     /// <returns>The service collection with the transfer selector and object manager registered.</returns>

@@ -1,5 +1,8 @@
 ﻿namespace Elefess.Models;
 
+/// <summary>
+/// A Git LFS operation type.
+/// </summary>
 public enum LfsOperation
 {
     /// <summary>

@@ -3,11 +3,11 @@ using System.Text.Json.Serialization;
 
 namespace Elefess.Models;
 
-internal sealed class LfsTransferCollectionJsonConverter : JsonConverter<ICollection<LfsTransfer>>
+internal sealed class LfsTransferCollectionJsonConverter : JsonConverter<ICollection<LfsTransferAdapter>>
 {
-    public override ICollection<LfsTransfer> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override ICollection<LfsTransferAdapter> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var transfers = new List<LfsTransfer>();
+        var transfers = new List<LfsTransferAdapter>();
         
         if (reader.TokenType != JsonTokenType.StartArray || !reader.Read())
             throw new JsonException("Invalid array start, or failed to read array start.");
@@ -21,7 +21,7 @@ internal sealed class LfsTransferCollectionJsonConverter : JsonConverter<ICollec
         return transfers;
     }
 
-    public override void Write(Utf8JsonWriter writer, ICollection<LfsTransfer> value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, ICollection<LfsTransferAdapter> value, JsonSerializerOptions options)
     {
         writer.WriteStartArray();
         

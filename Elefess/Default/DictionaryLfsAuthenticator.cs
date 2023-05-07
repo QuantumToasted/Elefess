@@ -2,16 +2,24 @@
 
 namespace Elefess;
 
+/// <summary>
+/// A Git LFS authenticator
+/// </summary>
 public sealed class DictionaryLfsAuthenticator : ILfsAuthenticator
 {
     private readonly IReadOnlyDictionary<string, string> _credentials;
 
+    /// <summary>
+    /// Constructs a <see cref="DictionaryLfsAuthenticator"/> with existing credentials.
+    /// </summary>
+    /// <param name="credentials">The credentials that will be validated against.</param>
     public DictionaryLfsAuthenticator(IDictionary<string, string> credentials)
     {
         _credentials = credentials.AsReadOnly();
     }
 
-    public Task AuthenticateAsync(string id, string password, LfsOperation requestedOperation, CancellationToken cancellationToken)
+    /// <inheritdoc />
+    public Task AuthenticateAsync(string id, string password, LfsOperation operation, CancellationToken cancellationToken)
     {
         if (!_credentials.TryGetValue(id, out var p) || p != password)
             throw new InvalidOperationException("Provided username/password combination is invalid.");

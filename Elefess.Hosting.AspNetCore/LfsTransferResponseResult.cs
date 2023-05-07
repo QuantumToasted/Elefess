@@ -2,7 +2,6 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using Elefess;
 using Elefess.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -17,8 +16,8 @@ internal sealed class LfsTransferResponseResult : IResult
         _transfer = transfer;
     }
     
-    public LfsTransferResponseResult(LfsTransfer transfer, IReadOnlyCollection<LfsResponseObject> objects, string? hashAlgorithm = null)
-        : this(new LfsBatchTransferResponse(transfer, objects, hashAlgorithm))
+    public LfsTransferResponseResult(LfsTransferAdapter transferAdapter, IReadOnlyCollection<LfsResponseObject> objects, string? hashAlgorithm = null)
+        : this(new LfsBatchTransferResponse(transferAdapter, objects, hashAlgorithm))
     { }
     
     public Task ExecuteAsync(HttpContext httpContext)

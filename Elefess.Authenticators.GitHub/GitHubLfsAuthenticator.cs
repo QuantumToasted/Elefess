@@ -1,27 +1,31 @@
-﻿using Elefess;
-using Elefess.Models;
+﻿using Elefess.Models;
 using Octokit;
 
 namespace Elefess.Authenticators.GitHub;
 
+/// <summary>
+/// A Git LFS authenticator which authenticates with GitHub using a user's username and personal access token.
+/// </summary>
+/// <remarks>The personal access token used in <see cref="AuthenticateAsync"/> should have the ability to read the repository.</remarks>
 public sealed class GitHubLfsAuthenticator : ILfsAuthenticator
 {
     private readonly GitHubLfsAuthenticatorOptions _options;
 
-    public GitHubLfsAuthenticator(GitHubLfsAuthenticatorOptions options)
+    internal GitHubLfsAuthenticator(GitHubLfsAuthenticatorOptions options)
     {
         _options = options;
     }
 
-    public async Task AuthenticateAsync(string username, string authToken, LfsOperation requestedOperation, CancellationToken cancellationToken)
+    /// <inheritdoc />
+    public async Task AuthenticateAsync(string username, string authToken, LfsOperation operation, CancellationToken cancellationToken)
     {
         var client = CreateRepositoriesClient(_options.BaseAddress, username, authToken);
 
         var repository = await client.Get(_options.Organization, _options.Repository);
 
-        var missingPermission = requestedOperation == LfsOperation.Download && !repository.Permissions.Pull
+        var missingPermission = operation == LfsOperation.Download && !repository.Permissions.Pull
             ? "pull"
-            : requestedOperation == LfsOperation.Upload && !repository.Permissions.Push
+            : operation == LfsOperation.Upload && !repository.Permissions.Push
                 ? "push"
                 : null;
 

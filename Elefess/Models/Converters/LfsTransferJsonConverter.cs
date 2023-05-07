@@ -3,11 +3,11 @@ using System.Text.Json.Serialization;
 
 namespace Elefess.Models;
 
-internal sealed class LfsTransferJsonConverter : JsonConverter<LfsTransfer>
+internal sealed class LfsTransferJsonConverter : JsonConverter<LfsTransferAdapter>
 {
-    public override LfsTransfer Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override LfsTransferAdapter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         => reader.GetString()!;
 
-    public override void Write(Utf8JsonWriter writer, LfsTransfer value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, LfsTransferAdapter value, JsonSerializerOptions options)
         => writer.WriteStringValue(value);
 }

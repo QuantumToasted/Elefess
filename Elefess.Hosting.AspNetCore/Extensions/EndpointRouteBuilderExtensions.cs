@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
-using Elefess;
 using Elefess.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,15 +11,24 @@ using Microsoft.Extensions.Logging;
 
 namespace Elefess.Hosting.AspNetCore.Extensions;
 
+/// <summary>
+/// Various extension methods for mapping Git LFS endpoints to an <see cref="IEndpointConventionBuilder"/>.
+/// </summary>
 public static class EndpointRouteBuilderExtensions
 {
+    /// <summary>
+    /// Maps a <c>POST</c> request for the Git LFS batch object endpoint.
+    /// </summary>
+    /// <param name="builder">The endpoint router builder to map this endpoint to.</param>
+    /// <param name="route">The route to the endpoint. Defaults to <c>/objects/batch</c>, the default in the API spec.</param>
+    /// <returns></returns>
     public static IEndpointConventionBuilder MapGitLfsBatch(this IEndpointRouteBuilder builder, string route = "/objects/batch")
     {
         return builder.MapPost(route, PostObjectsBatch);
 
         static async Task<IResult> PostObjectsBatch(HttpContext context,
             [FromServices] ILfsAuthenticator authenticator,
-            [FromServices] ILfsTransferAdapter adapter,
+            [FromServices] ILfsTransferSelector selector,
             [FromServices] ILfsObjectManager objectManager,
             [FromServices] ILoggerFactory loggerFactory,
             CancellationToken cancellationToken,
@@ -83,10 +91,10 @@ public static class EndpointRouteBuilderExtensions
             
             #endregion
 
-            LfsTransfer selectedTransferType;
+            LfsTransferAdapter selectedTransferAdapter;
             try
             {
-                selectedTransferType = await adapter.SelectTransferAsync(request, cancellationToken);
+                selectedTransferAdapter = await selector.SelectTransferAsync(request.RequestedTransferAdapters, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -94,14 +102,9 @@ public static class EndpointRouteBuilderExtensions
                 return new LfsErrorResponseResult(HttpStatusCode.UnprocessableEntity, ex.Message);
             }
 
-            var responseObjects = request.Operation switch
-            {
-                LfsOperation.Upload => await objectManager.CreateUploadObjectsAsync(request.Objects.ToList(), cancellationToken),
-                LfsOperation.Download => await objectManager.CreateDownloadObjectsAsync(request.Objects.ToList(), cancellationToken),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            var responseObjects = await objectManager.CreateObjectsAsync(request.Objects.ToList(), request.Operation, cancellationToken);
 
-            return new LfsTransferResponseResult(selectedTransferType, responseObjects, request.HashAlgorithm);
+            return new LfsTransferResponseResult(selectedTransferAdapter, responseObjects, request.HashAlgorithm);
             
             static bool TryDecodeCredentials(string headerValue,
                 [NotNullWhen(true)]

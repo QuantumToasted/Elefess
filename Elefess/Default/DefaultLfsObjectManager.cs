@@ -10,7 +10,7 @@ public sealed class DefaultLfsObjectManager : ILfsObjectManager
     private readonly ILfsOidMapper _mapper;
 
     /// <summary>
-    ///  Creates an instance of a <see cref="DefaultLfsObjectManager"/> using a provided OID mapper.
+    /// Creates an instance of a <see cref="DefaultLfsObjectManager"/> using a provided OID mapper.
     /// </summary>
     /// <param name="mapper">The OID mapper to use.</param>
     public DefaultLfsObjectManager(ILfsOidMapper mapper)

@@ -11,7 +11,11 @@ public sealed class GitHubLfsAuthenticator : ILfsAuthenticator
 {
     private readonly GitHubLfsAuthenticatorOptions _options;
 
-    internal GitHubLfsAuthenticator(GitHubLfsAuthenticatorOptions options)
+    /// <summary>
+    /// Creates an instance of a <see cref="GitHubLfsAuthenticator"/> using a provided set of options.
+    /// </summary>
+    /// <param name="options">The options to configure this instance.</param>
+    public GitHubLfsAuthenticator(GitHubLfsAuthenticatorOptions options)
     {
         _options = options;
     }

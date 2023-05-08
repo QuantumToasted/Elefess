@@ -22,10 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="MyTestProject" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Elefess.Authenticators.GitHub\Elefess.Authenticators.GitHub.csproj" />
       <ProjectReference Include="..\Elefess\Elefess.csproj" />
       <ProjectReference Include="..\Elefess.Hosting.AspNetCore\Elefess.Hosting.AspNetCore.csproj" />

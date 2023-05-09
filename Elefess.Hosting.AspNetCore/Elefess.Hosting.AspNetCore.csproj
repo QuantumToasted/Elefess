@@ -9,12 +9,13 @@
         <Description>Elefess.Hosting.AspNetCore is a hosting implementation which hosts a Git LFS server utilizing a ASP.NET Core minimal API.</Description>
         <Copyright>© 2023 QuantumToasted</Copyright>
         <PackageProjectUrl>https://github.com/QuantumToasted/Elefess</PackageProjectUrl>
-        <PackageLicenseExpression>LGPL-2.1-or-later</PackageLicenseExpression>
+        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>git-lfs gitlfs git lfs elefess asp.net aspnetcore hosting</PackageTags>
-        <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+        <PackageReleaseNotes>Re-licensed to LGPLv3.</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -28,7 +29,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Elefess\Elefess.csproj" />
       <FrameworkReference Include="Microsoft.AspNetCore.App" />
-      <None Include="..\README.md" Pack="true" PackagePath="\"/>
+      <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

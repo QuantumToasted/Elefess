@@ -2,7 +2,7 @@
 Elefess.Hosting.AspNetCore is a custom host implementation for Elefess which utilizes ASP.NET Core Minimal APIs to host an Elefess server.
 
 ## Quick start
-<small>*See the main Elefess [quick start guide](../Elefess/README.md#quick-start) for core Elefess-related information.*</small>
+*See the main Elefess [quick start guide](../Elefess/README.md#quick-start) for core Elefess-related information.*
 
 While registering your services:
 ```cs

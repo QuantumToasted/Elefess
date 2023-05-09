@@ -2,7 +2,7 @@
 Elefess.Authenticators.GitHub is a custom `ILfsAuthenticator` implementation for Elefess which utilizes a GitHub username & personal access token for Basic authorization.
 
 ## Quick start
-<small>*See the main Elefess [quick start guide](../Elefess/README.md#quick-start) for core Elefess-related information.*</small>
+*See the main Elefess [quick start guide](../Elefess/README.md#quick-start) for core Elefess-related information.*
 
 While registering your services:
 ```cs

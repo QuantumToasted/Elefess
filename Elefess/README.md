@@ -47,5 +47,5 @@ An Elefess server implementing this interface would then be able to convert into
 - If a request is to upload OID `a0dca55d00d4e444d87326146a721ce41d494783ea9a0fdf7e2826a32a8bbc24` with size `374252189`, the server would return `LfsResponseObject.BasicUpload(new($"https://example.com/upload/a0dca55d00d4e444d87326146a721ce41d494783ea9a0fdf7e2826a32a8bbc24"))`, which would be converted to an `upload` action to POST to the `Uri` previously mentioned.
 - If a request is to download OID `b6ea4353b49b583f501ea87778f7699e372a8b1c83fb86cd468b3c8b5d229ffb` with size `476885649`, if there is no file corresponding to that OID, the server would return `LfsResponseObject.FromError(LfsObjectError.NotFound())`, which would be converted to an `error` object indicating that the specified object could not be found.
 
-<small>* *If the `DefaultLfsObjectManager` is utilized, an implementation of `ILfsOidMapper` **is** required. In the case of a different implementation being used, it is not necessarily required but can still be utilized in the manner detailed above.*</small>
+* *If the `DefaultLfsObjectManager` is utilized, an implementation of `ILfsOidMapper` **is** required. In the case of a different implementation being used, it is not necessarily required but can still be utilized in the manner detailed above.*
 

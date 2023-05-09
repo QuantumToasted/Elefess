@@ -10,12 +10,13 @@
         <Description>Elefess is a Git LFS server implementation following the API spec, allowing for the design and usage of fully custom Git LFS servers beyond those provided by popular Git hosts such as GitHub or GitLab.</Description>
         <Copyright>© 2023 QuantumToasted</Copyright>
         <PackageProjectUrl>https://github.com/QuantumToasted/Elefess</PackageProjectUrl>
-        <PackageLicenseExpression>LGPL-2.1-or-later</PackageLicenseExpression>
+        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>git-lfs gitlfs git lfs elefess</PackageTags>
-        <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+        <PackageReleaseNotes>Re-licensed to LGPLv3.</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -28,7 +29,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-      <None Include="..\README.md" Pack="true" PackagePath="\"/>
+      <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

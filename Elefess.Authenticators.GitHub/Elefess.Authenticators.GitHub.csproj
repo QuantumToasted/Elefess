@@ -9,12 +9,13 @@
         <Description>Elefess.Authenticators.GitHub is a custom IAuthenticator implementation for Elefess which utilizes a GitHub username &amp; personal access token for Basic authorization.</Description>
         <Copyright>© 2023 QuantumToasted</Copyright>
         <PackageProjectUrl>https://github.com/QuantumToasted/Elefess</PackageProjectUrl>
-        <PackageLicenseExpression>LGPL-2.1-or-later</PackageLicenseExpression>
+        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>git-lfs gitlfs git lfs elefess github authenticator</PackageTags>
-        <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+        <PackageReleaseNotes>Re-licensed to LGPLv3.</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -33,7 +34,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Elefess\Elefess.csproj" />
-      <None Include="..\README.md" Pack="true" PackagePath="\"/>
+      <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

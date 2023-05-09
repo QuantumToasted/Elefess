@@ -1,6 +1,5 @@
 using Elefess;
-using Elefess.Extensions;
-using Elefess.Hosting.AspNetCore.Extensions;
+using Elefess.Hosting.AspNetCore;
 using Elefess.TestHost.AspNetCore;
 
 var builder = WebApplication.CreateBuilder();

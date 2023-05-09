@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Elefess.Hosting.AspNetCore.Extensions;
+namespace Elefess.Hosting.AspNetCore;
 
 /// <summary>
 /// Various extension methods for registering Git LFS related ASP.NET hosting types with an <see cref="IServiceCollection"/>.

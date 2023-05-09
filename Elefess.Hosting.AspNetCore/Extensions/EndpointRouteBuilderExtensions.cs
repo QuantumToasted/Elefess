@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Elefess.Hosting.AspNetCore.Extensions;
+namespace Elefess.Hosting.AspNetCore;
 
 /// <summary>
 /// Various extension methods for mapping Git LFS endpoints to an <see cref="IEndpointConventionBuilder"/>.

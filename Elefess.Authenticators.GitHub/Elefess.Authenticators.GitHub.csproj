@@ -6,16 +6,16 @@
         <Nullable>enable</Nullable>
         <Title>Elefess.Authenticators.GitHub</Title>
         <Authors>QuantumToasted</Authors>
-        <Description>Elefess.Authenticators.GitHub is a custom IAuthenticator implementation for Elefess which utilizes a GitHub username &amp; personal access token for Basic authorization.</Description>
+        <Description>Elefess.Authenticators.GitHub is a custom ILfsAuthenticator implementation for Elefess which utilizes a GitHub username &amp; personal access token for Basic authorization.</Description>
         <Copyright>© 2023 QuantumToasted</Copyright>
         <PackageProjectUrl>https://github.com/QuantumToasted/Elefess</PackageProjectUrl>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>git-lfs gitlfs git lfs elefess github authenticator</PackageTags>
-        <PackageReleaseNotes>Re-licensed to LGPLv3.</PackageReleaseNotes>
+        <PackageReleaseNotes>Split READMEs into per-project files.</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -34,7 +34,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Elefess\Elefess.csproj" />
-      <None Include="..\README.md" Pack="true" PackagePath="\" />
+      <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

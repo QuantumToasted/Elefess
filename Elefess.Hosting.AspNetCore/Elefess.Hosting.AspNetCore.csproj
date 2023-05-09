@@ -6,16 +6,16 @@
         <Nullable>enable</Nullable>
         <Title>Elefess.Hosting.AspNetCore</Title>
         <Authors>QuantumToasted</Authors>
-        <Description>Elefess.Hosting.AspNetCore is a hosting implementation which hosts a Git LFS server utilizing a ASP.NET Core minimal API.</Description>
+        <Description>Elefess.Hosting.AspNetCore is a custom host implementation for Elefess which utilizes ASP.NET Core Minimal APIs to host an Elefess server.</Description>
         <Copyright>© 2023 QuantumToasted</Copyright>
         <PackageProjectUrl>https://github.com/QuantumToasted/Elefess</PackageProjectUrl>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>git-lfs gitlfs git lfs elefess asp.net aspnetcore hosting</PackageTags>
-        <PackageReleaseNotes>Re-licensed to LGPLv3.</PackageReleaseNotes>
+        <PackageReleaseNotes>Split READMEs into per-project files.</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,7 +29,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Elefess\Elefess.csproj" />
       <FrameworkReference Include="Microsoft.AspNetCore.App" />
-      <None Include="..\README.md" Pack="true" PackagePath="\" />
+      <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

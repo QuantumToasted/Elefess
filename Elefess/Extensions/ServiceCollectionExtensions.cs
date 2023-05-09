@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Elefess.Extensions;
+namespace Elefess;
 
 /// <summary>
 /// Various extension methods for registering various Elefess types with an <see cref="IServiceCollection"/>.

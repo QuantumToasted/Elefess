@@ -5,9 +5,9 @@ Elefess is a Git LFS server implementation following the [API spec](https://gith
 Elefess on its own **does not** function as a Git LFS server out of the box. You will need a hosting setup such as [Elefess.Hosting.AspNetCore](../Elefess.Hosting.AspNetCore/README.md) or your own hosting solution to run a server. This project contains the core interfaces (+ a few implementations) and the API JSON models.
 
 ## Elefess core types
-- All official Elefess hosting implementation types will access and execute its appropriate types and methods in the following order - Custom or third-party implementations are certainly not required or expected to follow it strictly, but it is recommended to do so for consistency.
+- All official Elefess hosting implementation types will access and execute its appropriate types and methods in the order defined below - Custom or third-party implementations are certainly not required or expected to follow it strictly, but it is recommended to do so for consistency.
 - Elefess utilizes an `Exception`-based approach for its request execution pipeline to avoid boilerplate code or heavy reliance on third-party libraries. In lieu of a `Result`-based approach, implementations of Elefess' various interface types should be expected to throw the appropriate `Exception` in an error state, instead of returning an error value or string directly.
-- All types which are required in the execution pipeline in first-party hosting solutions will be suffixed with an asterisk (*).
+- All interfaces of which an implementation are required in the execution pipeline in first-party hosting solutions will be suffixed with an asterisk (*).
 
 ### 1. [ILfsAuthenticator](ILfsAuthenticator.cs) *
 The Git LFS API uses [HTTP Basic Authentication](https://github.com/git-lfs/git-lfs/blob/8e96b5d5d84095d1c0dd0c550d8fdf2c8c5c6456/docs/api/authentication.md) to authorize requests. First in the request pipeline, an instance of `ILfsAuthenticator` is designed to authenticate a request from the (base64) decoded credentials supplied:

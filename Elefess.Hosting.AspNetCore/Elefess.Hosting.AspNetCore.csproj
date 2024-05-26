@@ -13,9 +13,9 @@
         <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>git-lfs gitlfs git lfs elefess asp.net aspnetcore hosting</PackageTags>
-        <PackageReleaseNotes>Split READMEs into per-project files.</PackageReleaseNotes>
+        <PackageReleaseNotes>Included more informative error responses for incorrect Accept and Content-Type headers.</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>1.2.0</Version>
+        <Version>1.2.1</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

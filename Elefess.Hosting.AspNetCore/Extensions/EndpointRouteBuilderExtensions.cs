@@ -67,13 +67,13 @@ public static class EndpointRouteBuilderExtensions
             if (context.Request.Headers.Accept != LfsUtil.Constants.Headers.Values.ACCEPT)
             {
                 return new LfsErrorResponseResult(HttpStatusCode.BadRequest,
-                    $"Invalid Accept header - must be {LfsUtil.Constants.Headers.Values.ACCEPT}");
+                    $"Invalid Accept header - expected \"{LfsUtil.Constants.Headers.Values.ACCEPT}\", got \"{context.Request.Headers.Accept}\".");
             }
 
             if (context.Request.ContentType != LfsUtil.Constants.Headers.Values.CONTENT_TYPE)
             {
                 return new LfsErrorResponseResult(HttpStatusCode.UnsupportedMediaType,
-                    $"Invalid Content-Type header - must be {LfsUtil.Constants.Headers.Values.CONTENT_TYPE}");
+                    $"Invalid Content-Type header - expected \"{LfsUtil.Constants.Headers.Values.CONTENT_TYPE}\", got \"{context.Request.ContentType}\".");
             }
 
             if (context.RequestServices.GetService<ILfsRequestValidator>() is { } validator)

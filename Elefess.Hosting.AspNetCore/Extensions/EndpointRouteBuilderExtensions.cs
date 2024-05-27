@@ -64,16 +64,16 @@ public static class EndpointRouteBuilderExtensions
                 return new LfsErrorResponseResult(HttpStatusCode.Unauthorized, ex.Message);
             }
             
-            if (context.Request.Headers.Accept != LfsUtil.Constants.Headers.Values.ACCEPT)
+            if (context.Request.Headers.Accept.FirstOrDefault()?.StartsWith(LfsUtil.Constants.Headers.Values.ACCEPT) != true)
             {
                 return new LfsErrorResponseResult(HttpStatusCode.BadRequest,
-                    $"Invalid Accept header - expected \"{LfsUtil.Constants.Headers.Values.ACCEPT}\", got \"{context.Request.Headers.Accept}\".");
+                    $"Invalid Accept header start - expected \"{LfsUtil.Constants.Headers.Values.ACCEPT}\", got \"{context.Request.Headers.Accept}\".");
             }
 
-            if (context.Request.ContentType != LfsUtil.Constants.Headers.Values.CONTENT_TYPE)
+            if (context.Request.ContentType?.StartsWith(LfsUtil.Constants.Headers.Values.CONTENT_TYPE) != true)
             {
                 return new LfsErrorResponseResult(HttpStatusCode.UnsupportedMediaType,
-                    $"Invalid Content-Type header - expected \"{LfsUtil.Constants.Headers.Values.CONTENT_TYPE}\", got \"{context.Request.ContentType}\".");
+                    $"Invalid Content-Type header start - expected \"{LfsUtil.Constants.Headers.Values.CONTENT_TYPE}\", got \"{context.Request.ContentType}\".");
             }
 
             if (context.RequestServices.GetService<ILfsRequestValidator>() is { } validator)

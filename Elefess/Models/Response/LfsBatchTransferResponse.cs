@@ -5,13 +5,24 @@ namespace Elefess.Models;
 /// <summary>
 /// The main object returned with a Git LFS batch object response.
 /// </summary>
-/// <param name="TransferAdapter">The transfer adapter selected by the <see cref="ILfsTransferSelector"/>.</param>
-/// <param name="Objects">A collection of <see cref="LfsResponseDataObject"/> and/or <see cref="LfsResponseErrorObject"/>s representing the response objects </param>
-/// <param name="HashAlgorithm">The hash algorithm the response objects' OIDs use.</param>
-public sealed record LfsBatchTransferResponse(
-    [property: JsonPropertyName("transfer"), JsonConverter(typeof(LfsTransferJsonConverter)), JsonPropertyOrder(1)]
-        LfsTransferAdapter TransferAdapter,
-    [property: JsonPropertyName("objects"), JsonConverter(typeof(LfsResponseObjectCollectionJsonConverter)), JsonPropertyOrder(3)]
-        IReadOnlyCollection<LfsResponseObject> Objects,
-    [property: JsonPropertyName("hash_algo"), JsonPropertyOrder(2), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        string? HashAlgorithm = null);
+public sealed class LfsBatchTransferResponse
+{
+    /// <summary>
+    /// The transfer adapter selected by the <see cref="ILfsTransferSelector"/>.
+    /// </summary>
+    [JsonPropertyName("transfer"), JsonConverter(typeof(LfsTransferJsonConverter))]
+    public required LfsTransferAdapter TransferAdapter { get; init; }
+
+    /// <summary>
+    /// A collection of <see cref="LfsResponseDataObject"/> and/or <see cref="LfsResponseErrorObject"/>s representing the response objects.
+    /// </summary>
+    [JsonPropertyName("hash_algo"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? HashAlgorithm { get; init; }
+    
+    /// <summary>
+    /// The hash algorithm the response objects' OIDs use.
+    /// </summary>
+    //[JsonPropertyName("objects"), JsonConverter(typeof(LfsResponseObjectCollectionJsonConverter))]
+    [JsonPropertyName("objects")]
+    public required IReadOnlyCollection<LfsResponseObject> Objects { get; init; }
+}

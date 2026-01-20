@@ -7,25 +7,19 @@ using Microsoft.AspNetCore.Http;
 
 namespace Elefess.Hosting.AspNetCore;
 
-internal sealed class LfsTransferResponseResult : IResult
+internal sealed class LfsTransferResponseResult(LfsBatchTransferResponse transfer) : IResult
 {
-    private readonly LfsBatchTransferResponse _transfer;
+    private static readonly JsonSerializerOptions JsonOptions = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin) };
 
-    public LfsTransferResponseResult(LfsBatchTransferResponse transfer)
-    {
-        _transfer = transfer;
-    }
-    
     public LfsTransferResponseResult(LfsTransferAdapter transferAdapter, IReadOnlyCollection<LfsResponseObject> objects, string? hashAlgorithm = null)
-        : this(new LfsBatchTransferResponse(transferAdapter, objects, hashAlgorithm))
+        : this(new LfsBatchTransferResponse { TransferAdapter = transferAdapter, Objects = objects, HashAlgorithm = hashAlgorithm })
     { }
     
     public Task ExecuteAsync(HttpContext httpContext)
     {
         httpContext.Response.StatusCode = (int) HttpStatusCode.OK;
         httpContext.Response.ContentType = LfsUtil.Constants.Headers.Values.CONTENT_TYPE;
-        
-        return httpContext.Response.WriteAsync(JsonSerializer.Serialize(_transfer,
-            new JsonSerializerOptions{Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin)}));
+
+        return httpContext.Response.WriteAsync(JsonSerializer.Serialize(transfer, JsonOptions));
     }
 }

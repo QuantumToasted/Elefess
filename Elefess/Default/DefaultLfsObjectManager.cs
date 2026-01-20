@@ -30,15 +30,10 @@ public sealed class DefaultLfsObjectManager : ILfsObjectManager
 
             if (responseObject.HasData)
                 continue;
-            
-            if (responseObject is LfsResponseDataObject dataObject)
-            {
-                responseObjects[i] = dataObject with { Oid = objects[i].Oid, Size = objects[i].Size, Authenticated = true };
-            }
-            else
-            {
-                responseObjects[i] = responseObject with { Oid = objects[i].Oid, Size = objects[i].Size };
-            }
+
+            var obj = objects[i];
+            responseObject._oid = obj.Oid;
+            responseObject._size = obj.Size;
         }
 
         return responseObjects;

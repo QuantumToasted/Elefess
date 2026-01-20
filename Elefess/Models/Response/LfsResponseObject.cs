@@ -6,16 +6,28 @@ namespace Elefess.Models;
 /// <summary>
 /// A base Git LFS response object.
 /// </summary>
-/// <param name="Oid">The OID, or file hash, of the response object.</param>
-/// <param name="Size">The file size of the response object.</param>
-[JsonDerivedType(typeof(LfsResponseDataObject))]
-[JsonDerivedType(typeof(LfsResponseErrorObject))]
-public abstract record LfsResponseObject(
-    [property: JsonPropertyName("oid"), JsonPropertyOrder(1)]
-        string Oid,
-    [property: JsonPropertyName("size"), JsonPropertyOrder(2)]
-        long Size)
+[JsonDerivedType(typeof(LfsResponseErrorObject), "error")]
+[JsonDerivedType(typeof(LfsResponseDataObject), "actions")]
+public abstract class LfsResponseObject
 {
+    internal string _oid = null!;
+    internal long _size;
+    
+    /// <summary>
+    /// The OID, or file hash, of the response object.
+    /// </summary>
+    [JsonPropertyName("oid")]
+    public required string Oid { get => _oid; init => _oid = value; }
+    
+    /// <summary>
+    /// The file size of the response object
+    /// </summary>
+    [JsonPropertyName("size")]
+    public required long Size { get => _size; init => _size = value; }
+    
+    [JsonIgnore] 
+    internal bool HasData { get; private init; } = true;
+    
     /// <summary>
     /// An error response object which wraps an <see cref="LfsObjectError"/>.
     /// </summary>
@@ -26,8 +38,11 @@ public abstract record LfsResponseObject(
     /// </remarks>
     public static LfsResponseErrorObject FromError(LfsObjectError error)
     {
-        return new LfsResponseErrorObject(default!, default, error)
+        return new LfsResponseErrorObject
         {
+            Oid = null!,
+            Size = 0,
+            Error = error,
             HasData = false
         };
     }
@@ -42,8 +57,11 @@ public abstract record LfsResponseObject(
     /// </remarks>
     public static LfsResponseErrorObject FromError(string message, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
     {
-        return new LfsResponseErrorObject(default!, default, new LfsObjectError(statusCode, message))
+        return new LfsResponseErrorObject
         {
+            Oid = null!,
+            Size = 0,
+            Error = new LfsObjectError { Code = statusCode, Message = message },
             HasData = false
         };
     }
@@ -56,13 +74,18 @@ public abstract record LfsResponseObject(
     /// The <see cref="DefaultLfsObjectManager"/> sets these properties automatically, but this behavior may not be desired.
     /// <p>To avoid this behavior, do not use these convenience methods.</p>
     /// </remarks>
-    public static LfsResponseDataObject BasicUpload(Uri uri, IReadOnlyDictionary<string, string>? headers = null, int? expiryInSeconds = null, DateTimeOffset? expiresAt = null)
+    public static LfsResponseDataObject BasicUpload(Uri uri, IReadOnlyDictionary<string, string>? headers = null, DateTimeOffset? expiresAt = null,
+        bool? useGitLfsAuthentication = false)
     {
-        return new LfsResponseDataObject(default!, default, new Dictionary<string, LfsResponseObjectAction>
+        return new LfsResponseDataObject
         {
-            [LfsUtil.Constants.Actions.UPLOAD] = new(uri, headers, expiryInSeconds, expiresAt)
-        })
-        {
+            Oid = null!,
+            Size = 0,
+            Actions = new Dictionary<string, LfsResponseObjectAction>
+            {
+                [LfsUtil.Constants.Actions.UPLOAD] = new() { Uri = uri, Headers = headers, ExpiresAt = expiresAt }
+            },
+            UsesGitLfsAuthentication = useGitLfsAuthentication,
             HasData = false
         };
     }
@@ -75,17 +98,19 @@ public abstract record LfsResponseObject(
     /// The <see cref="DefaultLfsObjectManager"/> sets these properties automatically, but this behavior may not be desired.
     /// <p>To avoid this behavior, do not use these convenience methods.</p>
     /// </remarks>
-    public static LfsResponseDataObject BasicDownload(Uri uri, IReadOnlyDictionary<string, string>? headers = null, int? expiryInSeconds = null, DateTimeOffset? expiresAt = null)
+    public static LfsResponseDataObject BasicDownload(Uri uri, IReadOnlyDictionary<string, string>? headers = null, DateTimeOffset? expiresAt = null,
+        bool? useGitLfsAuthentication = false)
     {
-        return new LfsResponseDataObject(default!, default, new Dictionary<string, LfsResponseObjectAction>
+        return new LfsResponseDataObject
         {
-            [LfsUtil.Constants.Actions.DOWNLOAD] = new(uri, headers, expiryInSeconds, expiresAt)
-        })
-        {
+            Oid = null!,
+            Size = 0,
+            Actions = new Dictionary<string, LfsResponseObjectAction>
+            {
+                [LfsUtil.Constants.Actions.DOWNLOAD] = new() { Uri = uri, Headers = headers, ExpiresAt = expiresAt }
+            },
+            UsesGitLfsAuthentication = useGitLfsAuthentication,
             HasData = false
         };
     }
-
-    [JsonIgnore] 
-    internal bool HasData { get; private init; } = true;
 }

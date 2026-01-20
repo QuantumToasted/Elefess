@@ -7,32 +7,24 @@ using Microsoft.AspNetCore.Http;
 
 namespace Elefess.Hosting.AspNetCore;
 
-internal sealed class LfsErrorResponseResult : IResult
+internal sealed class LfsErrorResponseResult(HttpStatusCode statusCode, LfsErrorResponse error) : IResult
 {
-    private readonly HttpStatusCode _statusCode;
-    private readonly LfsErrorResponse _error;
+    private static readonly JsonSerializerOptions JsonOptions = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin) };
 
-    public LfsErrorResponseResult(HttpStatusCode statusCode, LfsErrorResponse error)
-    {
-        _statusCode = statusCode;
-        _error = error;
-    }
-    
     public LfsErrorResponseResult(HttpStatusCode statusCode, string message, Uri? documentationUri = null, string? requestId = null)
-        : this(statusCode, new LfsErrorResponse(message, documentationUri, requestId))
+        : this(statusCode, new LfsErrorResponse { Message = message, DocumentationUri = documentationUri, RequestId = requestId })
     { }
 
     public Task ExecuteAsync(HttpContext httpContext)
     {
-        httpContext.Response.StatusCode = (int) _statusCode;
+        httpContext.Response.StatusCode = (int) statusCode;
         httpContext.Response.ContentType = LfsUtil.Constants.Headers.Values.CONTENT_TYPE;
         
-        if (_statusCode == HttpStatusCode.Unauthorized)
+        if (statusCode == HttpStatusCode.Unauthorized)
         {
-            httpContext.Response.Headers.Add(LfsUtil.Constants.Headers.Names.LFS_AUTHENTICATE, LfsUtil.Constants.Headers.Values.LFS_AUTHENTICATE_VALUE);
+            httpContext.Response.Headers.Append(LfsUtil.Constants.Headers.Names.LFS_AUTHENTICATE, LfsUtil.Constants.Headers.Values.LFS_AUTHENTICATE_VALUE);
         }
-        
-        return httpContext.Response.WriteAsync(JsonSerializer.Serialize(_error, 
-            new JsonSerializerOptions{Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin)}));
+
+        return httpContext.Response.WriteAsync(JsonSerializer.Serialize(error, JsonOptions));
     }
 }

@@ -15,7 +15,7 @@ public sealed class DictionaryLfsAuthenticator : ILfsAuthenticator
     /// <param name="credentials">The credentials that will be validated against.</param>
     public DictionaryLfsAuthenticator(IDictionary<string, string> credentials)
     {
-        _credentials = credentials.AsReadOnly();
+        _credentials = credentials.ToDictionary(x => x.Key, x => x.Value);
     }
 
     /// <inheritdoc />
@@ -24,6 +24,6 @@ public sealed class DictionaryLfsAuthenticator : ILfsAuthenticator
         if (!_credentials.TryGetValue(id, out var p) || p != password)
             throw new InvalidOperationException("Provided username/password combination is invalid.");
 
-        return Task.FromResult<string?>(null);
+        return Task.CompletedTask;
     }
 }

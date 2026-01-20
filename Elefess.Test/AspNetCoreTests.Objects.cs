@@ -20,7 +20,7 @@ public partial class AspNetCoreTests
         
         Assert.NotNull(response);
         
-        Assert.True(response.Objects.Count == 1);
+        Assert.Single(response.Objects);
 
         var dataObject = Assert.IsType<LfsResponseDataObject>(response.Objects.Single());
         

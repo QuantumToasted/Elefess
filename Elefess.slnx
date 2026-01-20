@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Elefess.Authenticators.GitHub/Elefess.Authenticators.GitHub.csproj" />
+  <Project Path="Elefess.Hosting.AspNetCore/Elefess.Hosting.AspNetCore.csproj" />
+  <Project Path="Elefess.Test/Elefess.Test.csproj" />
+  <Project Path="Elefess.TestHost.AspNetCore/Elefess.TestHost.AspNetCore.csproj" />
+  <Project Path="Elefess/Elefess.csproj" />
+</Solution>

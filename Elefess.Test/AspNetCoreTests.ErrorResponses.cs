@@ -14,16 +14,11 @@ using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 namespace Elefess.Test;
 using Xunit;
 
-public partial class AspNetCoreTests : IClassFixture<WebApplicationFactory<Program>>
+public partial class AspNetCoreTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
 {
     private static readonly JsonSerializerOptions GlobalOptions = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin) };
     
-    private readonly HttpClient _client;
-
-    public AspNetCoreTests(WebApplicationFactory<Program> factory)
-    {
-        _client = factory.CreateClient();
-    }
+    private readonly HttpClient _client = factory.CreateClient();
 
     [Theory]
     [InlineData(Constants.VALID_UPLOAD_OID, Constants.VALID_UPLOAD_SIZE)]
@@ -39,7 +34,7 @@ public partial class AspNetCoreTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Equal(HttpStatusCode.Unauthorized, httpResponse.StatusCode);
         Assert.NotEmpty(httpResponse.Headers.GetValues(LfsUtil.Constants.Headers.Names.LFS_AUTHENTICATE));
 
-        var response = await httpResponse.Content.ReadFromJsonAsync<LfsBatchTransferResponse>();
+        var response = await httpResponse.Content.ReadFromJsonAsync<LfsErrorResponse>();
         Assert.NotNull(response);
     }
     
@@ -74,7 +69,7 @@ public partial class AspNetCoreTests : IClassFixture<WebApplicationFactory<Progr
 
     private static HttpRequestMessage CreateDefaultRequest(string oid, long size, LfsOperation operation = LfsOperation.Upload, RequestFlags flags = RequestFlags.None)
     {
-        var request = new LfsBatchTransferRequest(operation, new[] { new LfsRequestObject(oid, size) });
+        var request = new LfsBatchTransferRequest { Operation = operation, Objects = [new LfsRequestObject { Oid = oid, Size = size }] };
         
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, "/objects/batch");
 

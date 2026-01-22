@@ -22,7 +22,6 @@ public sealed class LfsBatchTransferResponse
     /// <summary>
     /// The hash algorithm the response objects' OIDs use.
     /// </summary>
-    //[JsonPropertyName("objects"), JsonConverter(typeof(LfsResponseObjectCollectionJsonConverter))]
     [JsonPropertyName("objects")]
     public required IReadOnlyCollection<LfsResponseObject> Objects { get; init; }
 }

@@ -1,0 +1,19 @@
+<Project>
+   <PropertyGroup>
+      <AnalysisLevel>latest-all</AnalysisLevel>
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+      <Authors>QuantumToasted</Authors>
+      <Copyright>© 2026 QuantumToasted</Copyright>
+      <PackageProjectUrl>https://github.com/QuantumToasted/Elefess</PackageProjectUrl>
+      <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+      <RepositoryUrl>https://github.com/QuantumToasted/Elefess</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
+      <PackageReleaseNotes>Added support for Amazon S3-compatible APIs as an OID mapping source.</PackageReleaseNotes>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
+      <Version>1.4.0</Version>
+      <LangVersion>latest</LangVersion>
+	  <Nullable>enable</Nullable>
+	  <ImplicitUsings>enable</ImplicitUsings>
+   </PropertyGroup>
+</Project>

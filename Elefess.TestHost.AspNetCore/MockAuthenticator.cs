@@ -2,7 +2,7 @@
 
 namespace Elefess.TestHost.AspNetCore;
 
-public sealed class DummyAuthenticator : ILfsAuthenticator
+public sealed class MockAuthenticator : ILfsAuthenticator
 {
     public Task AuthenticateAsync(string id, string password, LfsOperation operation, CancellationToken cancellationToken)
     {

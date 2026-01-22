@@ -7,7 +7,7 @@ namespace Elefess;
 /// </summary>
 public sealed class DictionaryLfsAuthenticator : ILfsAuthenticator
 {
-    private readonly IReadOnlyDictionary<string, string> _credentials;
+    private readonly Dictionary<string, string> _credentials;
 
     /// <summary>
     /// Constructs a <see cref="DictionaryLfsAuthenticator"/> with existing credentials.

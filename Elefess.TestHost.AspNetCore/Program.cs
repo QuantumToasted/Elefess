@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddElefessMvcDefaults();
 builder.Services.AddElefessDefaults();
-builder.Services.AddOidMapper<DummyLfsOidMapper>();
-builder.Services.AddLfsAuthenticator<DummyAuthenticator>(); // still requires Basic authorization, but doesn't care about the username/password
+builder.Services.AddOidMapper<MockLfsOidMapper>();
+builder.Services.AddLfsAuthenticator<MockAuthenticator>(); // still requires Basic authorization, but doesn't care about the username/password
 
 var app = builder.Build();
 

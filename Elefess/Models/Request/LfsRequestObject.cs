@@ -10,10 +10,12 @@ public sealed class LfsRequestObject
     /// <summary>
     /// The OID, or file hash, of the object.
     /// </summary>
+    [JsonPropertyName("oid")]
     public required string Oid { get; init; }
     
     /// <summary>
     /// The file size of the object.
     /// </summary>
+    [JsonPropertyName("size")]
     public required long Size { get; init; }
 }

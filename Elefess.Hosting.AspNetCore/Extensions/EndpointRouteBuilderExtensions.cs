@@ -14,7 +14,7 @@ namespace Elefess.Hosting.AspNetCore;
 /// <summary>
 /// Various extension methods for mapping Git LFS endpoints to an <see cref="IEndpointConventionBuilder"/>.
 /// </summary>
-public static class EndpointRouteBuilderExtensions
+public static partial class EndpointRouteBuilderExtensions
 {
     extension(IEndpointRouteBuilder builder)
     {
@@ -47,11 +47,10 @@ public static class EndpointRouteBuilderExtensions
                 if (context.Request.Headers.Authorization.FirstOrDefault() is not { } headerValue)
                     return new LfsErrorResponseResult(HttpStatusCode.Unauthorized, "Missing Authorization header.");
 
-                if (!headerValue.StartsWith(basicHeaderValueStart))
+                if (!headerValue.StartsWith(basicHeaderValueStart, StringComparison.InvariantCulture))
                     return new LfsErrorResponseResult(HttpStatusCode.Unauthorized, "Invalid Authorization header.");
 
-                headerValue = headerValue[
-                    (headerValue.IndexOf(basicHeaderValueStart, StringComparison.Ordinal) + basicHeaderValueStart.Length + 1)..];
+                headerValue = headerValue[(headerValue.IndexOf(basicHeaderValueStart, StringComparison.Ordinal) + basicHeaderValueStart.Length + 1)..];
 
                 if (!TryDecodeCredentials(headerValue, out var id, out var password))
                     return new LfsErrorResponseResult(HttpStatusCode.Unauthorized, "Invalid Authorization header.");
@@ -62,17 +61,17 @@ public static class EndpointRouteBuilderExtensions
                 }
                 catch (Exception ex)
                 {
-                    logger.LogWarning(ex, "Failed to authenticate user.");
+                    LogUserAuthenticationFailed(logger, ex);
                     return new LfsErrorResponseResult(HttpStatusCode.Unauthorized, ex.Message);
                 }
 
-                if (context.Request.Headers.Accept.FirstOrDefault()?.StartsWith(LfsUtil.Constants.Headers.Values.ACCEPT) != true)
+                if (context.Request.Headers.Accept.FirstOrDefault()?.StartsWith(LfsUtil.Constants.Headers.Values.ACCEPT, StringComparison.InvariantCulture) != true)
                 {
                     return new LfsErrorResponseResult(HttpStatusCode.BadRequest,
                         $"Invalid Accept header start - expected \"{LfsUtil.Constants.Headers.Values.ACCEPT}\", got \"{context.Request.Headers.Accept}\".");
                 }
 
-                if (context.Request.ContentType?.StartsWith(LfsUtil.Constants.Headers.Values.CONTENT_TYPE) != true)
+                if (context.Request.ContentType?.StartsWith(LfsUtil.Constants.Headers.Values.CONTENT_TYPE, StringComparison.InvariantCulture) != true)
                 {
                     return new LfsErrorResponseResult(HttpStatusCode.UnsupportedMediaType,
                         $"Invalid Content-Type header start - expected \"{LfsUtil.Constants.Headers.Values.CONTENT_TYPE}\", got \"{context.Request.ContentType}\".");
@@ -86,7 +85,7 @@ public static class EndpointRouteBuilderExtensions
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, "Failed to validate LfsBatchTransferRequest.");
+                        LogRequestValidationFailed(logger, ex);
                         return new LfsErrorResponseResult(HttpStatusCode.UnprocessableEntity, ex.Message);
                     }
                 }
@@ -100,7 +99,7 @@ public static class EndpointRouteBuilderExtensions
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Failed to select appropriate transfer type.");
+                    LogTransferTypeSelectionFailed(logger, ex);
                     return new LfsErrorResponseResult(HttpStatusCode.UnprocessableEntity, ex.Message);
                 }
 
@@ -130,4 +129,13 @@ public static class EndpointRouteBuilderExtensions
             }
         }
     }
+    
+    [LoggerMessage(LogLevel.Warning, "Failed to authenticate user.")]
+    private static partial void LogUserAuthenticationFailed(ILogger logger, Exception ex);
+
+    [LoggerMessage(LogLevel.Warning, "Failed to validate LfsBatchTransferRequest.")]
+    private static partial void LogRequestValidationFailed(ILogger logger, Exception ex);
+
+    [LoggerMessage(LogLevel.Warning, "Failed to select appropriate transfer type.")]
+    private static partial void LogTransferTypeSelectionFailed(ILogger logger, Exception ex);
 }
